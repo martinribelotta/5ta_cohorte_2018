@@ -26,7 +26,17 @@
 *.a
 *.lib
 
+# Others
+*.bin
+*.elf
+*.lst
+*.map
+*.csv
+
 # Executables
 *.exe
 *.out
 *.app
+
+# Folders
+luismherrera/N2c03e1/app/out/
