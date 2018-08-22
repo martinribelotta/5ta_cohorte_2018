@@ -68,12 +68,16 @@ void     uartRefresh(rtc_t rtcData,uint16_t  adcData){
                                                          rtcData.hour,rtcData.min,rtcData.sec,
                                                          adcData);
    
+   //-----------------------------------------------------------------------------------------------------------
+   
    /*sprintf(resultArray,"%d / %2d / %d\t%d : %d : %d\tADC Read: %d\r\n",rtcData.mday,rtcData.month,rtcData.year,
                                                          rtcData.hour,rtcData.min,rtcData.sec,
                                                          adcData);
    
    uartWriteString(UART_USB,resultArray);
    */
+   
+   //------------------------------------------------------------------------------------------------------------
    
    //bool_t uint64ToString( uint64_t value, char* result, uint8_t base );
    /*uint64ToString(rtcData.mday,resultArray,BASE_10);
