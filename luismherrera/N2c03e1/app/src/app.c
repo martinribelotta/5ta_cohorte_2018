@@ -10,7 +10,7 @@
 #include "sapi.h"        // <= Biblioteca sAPI
 
 #define     PERIODE     1000
-#define     SIZE_ARRAY  20
+#define     SIZE_ARRAY  100
 #define     BASE_10     10
 
 void     uartRefresh(rtc_t,uint16_t);
@@ -64,8 +64,15 @@ int main( void )
 
 void     uartRefresh(rtc_t rtcData,uint16_t  adcData){
    uint8_t  resultArray[SIZE_ARRAY];
+   sprintf(resultArray,"%d / %2d / %d\t%d : %d : %d\tADC Read: %d\r\n",rtcData.mday,rtcData.month,rtcData.year,
+                                                         rtcData.hour,rtcData.min,rtcData.sec,
+                                                         adcData);
+   
+   uartWriteString(UART_USB,resultArray);
+   
+   
    //bool_t uint64ToString( uint64_t value, char* result, uint8_t base );
-   uint64ToString(rtcData.mday,resultArray,BASE_10);
+   /*uint64ToString(rtcData.mday,resultArray,BASE_10);
    if(rtcData.mday   <  10){
       uartWriteByte(UART_USB,'0');
       uartWriteString(UART_USB,resultArray);
@@ -113,5 +120,5 @@ void     uartRefresh(rtc_t rtcData,uint16_t  adcData){
    uint64ToString(adcData,resultArray,BASE_10);
    uartWriteString(UART_USB,resultArray);
    
-   uartWriteString(UART_USB,"\r\n");
+   uartWriteString(UART_USB,"\r\n");*/
 }
