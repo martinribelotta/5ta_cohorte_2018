@@ -64,7 +64,7 @@ int main( void )
 
 void     uartRefresh(rtc_t rtcData,uint16_t  adcData){
    uint8_t  resultArray[SIZE_ARRAY];
-   printf("%0d / %0d / %d\t%2d : %2d : %2d\tADC Read: %d\r\n",rtcData.mday,rtcData.month,rtcData.year,
+   printf("%02d / %02d / %d\t%02d : %02d : %02d\tADC Read: %d\r\n",rtcData.mday,rtcData.month,rtcData.year,
                                                          rtcData.hour,rtcData.min,rtcData.sec,
                                                          adcData);
    
