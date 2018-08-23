@@ -64,18 +64,18 @@ int main( void )
 
 void     uartRefresh(rtc_t rtcData,uint16_t  adcData){
    uint8_t  resultArray[SIZE_ARRAY];
-   printf("%02d / %02d / %d\t%02d : %02d : %02d\tADC Read: %d\r\n",rtcData.mday,rtcData.month,rtcData.year,
+   //printf("%02d / %02d / %d\t%02d : %02d : %02d\tADC Read: %d\r\n",rtcData.mday,rtcData.month,rtcData.year,
                                                          rtcData.hour,rtcData.min,rtcData.sec,
                                                          adcData);
    
    //-----------------------------------------------------------------------------------------------------------
    
-   /*sprintf(resultArray,"%d / %2d / %d\t%d : %d : %d\tADC Read: %d\r\n",rtcData.mday,rtcData.month,rtcData.year,
+   sprintf(resultArray,"%d / %02d / %02d\t%02d : %02d : %02d\tADC Read: %d\r\n",rtcData.mday,rtcData.month,rtcData.year,
                                                          rtcData.hour,rtcData.min,rtcData.sec,
                                                          adcData);
    
    uartWriteString(UART_USB,resultArray);
-   */
+   
    
    //------------------------------------------------------------------------------------------------------------
    
