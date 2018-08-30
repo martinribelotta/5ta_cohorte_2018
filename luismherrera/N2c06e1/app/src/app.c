@@ -23,6 +23,8 @@ CONSOLE_PRINT_ENABLE
 
 /*==================[declaraciones de funciones externas]====================*/
 
+static void format( float valor, char *dst, uint8_t pos );
+
 /*==================[funcion principal]======================================*/
 
 //Temperatura - Termometro
@@ -91,52 +93,40 @@ int main( void ){
 
    lcdGoToXY( 1, 1 ); // Poner cursor en 1, 1
 
-   lcdSendStringRaw( "Tmp" );    //texto Tmp
+   lcdSendStringRaw( " Tmp" );    //texto Tmp
    lcdData(0);                   //icono termómetro
+   
+   //lcdGoToXY(1,8);
 
-   lcdSendStringRaw( " Hum" );   //texto Hum
+   lcdSendStringRaw( "     Hum" );   //texto Hum
    lcdData(1);                   //ícono higrómetro
 
    delay_t  delayStruct;
    delayInit(&delayStruct,PERIODE);
+   
+   float dataTempDht11  =  0;
+   float dataHumDht11   =  0;
+   
+   dht11Init(GPIO1);
    // ---------- REPETIR POR SIEMPRE --------------------------
    while( TRUE )
    {
       if(delayRead(&delayStruct) == TRUE){
-         //Read raw data sensor
-         //Process raw data
+         dht11Read(&dataHumDht11,&dataTempDht11);  //Read raw data sensor
+         format(dataTempDht11, tempString, 0 );    //Process raw data
+         format(dataHumDht11, humString, 0);       //Process raw data
          //Allocate sensor data in string
+         
          lcdGoToXY(1,2);      //Cursor at second row
-         //Refresh lcd with new string data
+         lcdSendStringRaw( tempString );
+         lcdData(2);
+         lcdSendStringRaw( "C" );//Refresh lcd with new string data
+         
+         lcdGoToXY( 11, 2 );  // Poner cursor en 6, 2
+         lcdSendStringRaw( humString );
+         lcdSendStringRaw( "%" );
          gpioToggle(LEDG);
       }
-   
-/*
-      lcdGoToXY( 1, 2 );  // Poner cursor en 1, 2
-
-      lcdSendStringRaw( tempString );
-      lcdData(7);
-      lcdSendStringRaw( "C" );
-
-      lcdGoToXY( 6, 2 );  // Poner cursor en 7, 2
-      lcdSendStringRaw( humString );
-      lcdSendStringRaw( "%" );
-
-      lcdGoToXY( 11, 2 ); // Poner cursor en 13, 2
-      lcdSendStringRaw( vieString );
-      lcdSendStringRaw( "km/h" );
-
-      delay(3000);
-
-      lcdClear(); // Borrar la pantalla
-      lcdGoToXY( 1, 1 ); // Poner cursor en 1, 1
-      lcdData(3);
-      lcdData(4);
-      lcdData(5);
-      lcdData(6);
-
-      delay(2000);
-*/
    }
    return 0;
 }
@@ -144,5 +134,20 @@ int main( void ){
 /*==================[definiciones de funciones internas]=====================*/
 
 /*==================[definiciones de funciones externas]=====================*/
+
+static void format( float valor, char *dst, uint8_t pos ){
+	uint16_t val;
+	val = 10 * valor;
+	val = val % 1000;
+	dst[pos] = (val / 100) + '0';
+	pos++;
+	dst[pos] = (val % 100) / 10 + '0';
+	pos++;
+	dst[pos] = '.';
+	pos++;
+	dst[pos] = (val % 10)  + '0';
+	pos++;
+	dst[pos] = '\0';
+}
 
 /*==================[fin del archivo]========================================*/
